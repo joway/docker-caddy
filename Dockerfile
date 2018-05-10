@@ -23,4 +23,4 @@ COPY ./Caddyfile /etc/Caddyfile
 EXPOSE 80 443
 
 ENTRYPOINT ["caddy"]
-CMD ["--conf", "/etc/Caddyfile", "--log", "stdout"]
+CMD ["--conf", "/etc/Caddyfile", "--log", "stdout", "--agree=true"]
