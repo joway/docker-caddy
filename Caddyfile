@@ -1,9 +1,7 @@
 https://i.joway.io {
   log stdout
   errors stdout
-  tls {
-    dns cloudflare
-  }
+  tls joway.w@gmail.com
   gzip
   proxy / http://localhost:10001
 }
