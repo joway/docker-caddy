@@ -1,11 +1,16 @@
-FROM alpine:3.6
-USER root
+FROM amd64/alpine:3.7
 
-RUN apk add --no-cache curl
+RUN apk add --no-cache openssh-client git tar curl
 
-RUN curl https://getcaddy.com | sh -s personal
+RUN curl --silent --show-error --fail --location --header "Accept: application/tar+gzip, application/x-gzip, application/octet-stream" -o - \
+      "https://caddyserver.com/download/linux/amd64?plugins=${plugins}" \
+    | tar --no-same-owner -C /usr/bin/ -xz caddy && \
+    chmod 0755 /usr/bin/caddy && \
+    addgroup -S caddy && \
+    adduser -D -S -H -s /sbin/nologin -G caddy caddy && \
+    /usr/bin/caddy -version
 
-RUN mkdir /caddy-data
+USER caddy
 
 VOLUME [ "/root/.caddy" ]
 
