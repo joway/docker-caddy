@@ -5,5 +5,5 @@ https://i.joway.io {
       dns cloudflare
   }
   gzip
-  proxy / http://localhost:10001
+  proxy / http://0.0.0.0:10001
 }
