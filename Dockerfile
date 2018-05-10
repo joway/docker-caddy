@@ -1,7 +1,9 @@
 FROM alpine:3.6
 USER root
 
-RUN curl https://getcaddy.com | bash -s personal
+RUN apk add --no-cache curl
+
+RUN curl https://getcaddy.com | sh -s personal
 
 RUN mkdir /caddy-data
 
