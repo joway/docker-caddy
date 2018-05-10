@@ -1,0 +1,9 @@
+https://i.joway.io {
+  log stdout
+  errors stdout
+  tls {
+    dns cloudflare
+  }
+  gzip
+  proxy / http://localhost:10001
+}
