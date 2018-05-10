@@ -1,16 +1,20 @@
 FROM amd64/alpine:3.7
 
-RUN apk add --no-cache openssh-client git tar curl
+ENV OS=linux \
+    ARCH=amd64 \
+    FEATURES=cors+git+ipfilter+jwt+realip+search
 
-RUN curl --silent --show-error --fail --location --header "Accept: application/tar+gzip, application/x-gzip, application/octet-stream" -o - \
-      "https://caddyserver.com/download/linux/amd64?plugins=${plugins}" \
-    | tar --no-same-owner -C /usr/bin/ -xz caddy && \
-    chmod 0755 /usr/bin/caddy && \
-    addgroup -S caddy && \
-    adduser -D -S -H -s /sbin/nologin -G caddy caddy && \
-    /usr/bin/caddy -version
+# Get HTTPS support
+RUN apk update \
+    && apk add wget ca-certificates \
+    && update-ca-certificates
 
-USER caddy
+# Install Caddy server
+RUN mkdir -p /usr/local/src/caddy \
+    && wget "https://caddyserver.com/download/build?os=${OS}&arch=${ARCH}&features=${FEATURES//+/%2C}" -O /tmp/caddy.tar.gz \
+    && tar -C /usr/local/src/caddy -xvzf /tmp/caddy.tar.gz \
+    && chmod +x /usr/local/src/caddy/caddy \
+    && ln -s /usr/local/src/caddy/caddy /usr/local/bin/caddy
 
 VOLUME [ "/root/.caddy" ]
 
