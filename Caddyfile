@@ -1,21 +1,25 @@
 https://i.joway.io {
-  transparent
   log stdout
   errors stdout
   tls {
       dns cloudflare
   }
   gzip
-  proxy / http://0.0.0.0:10001
+  proxy / http://0.0.0.0:10001 {
+    transparent
+  }
 }
 https://issue.sh.mk/ {
-  transparent
   log stdout
   errors stdout
   tls {
       dns cloudflare
   }
   gzip
-  proxy /stk http://0.0.0.0:10002
-  proxy / http://0.0.0.0:10003
+  proxy /stk http://0.0.0.0:10002 {
+    transparent
+  }
+  proxy / http://0.0.0.0:10003 {
+    transparent
+  }
 }
