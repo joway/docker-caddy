@@ -7,3 +7,13 @@ https://i.joway.io {
   gzip
   proxy / http://0.0.0.0:10001
 }
+https://issue.sh.mk/ {
+  log stdout
+  errors stdout
+  tls {
+      dns cloudflare
+  }
+  gzip
+  proxy /stk http://0.0.0.0:10002
+  proxy / http://0.0.0.0:10003
+}
